@@ -5,7 +5,7 @@ using StudentManagement.Shared.DTOs;
 
 namespace StudentManagement.Api.Endpoints.Student
 {
-    public class CreateStudentEndpoint : Endpoint<CreateStudentDto, ApiResponse<StudentDto>>
+    public class CreateStudentEndpoint : Endpoint<CreateStudentRequest, ApiResponse<StudentDto>>
     {
         private readonly IStudentService _studentService;
 
@@ -14,10 +14,17 @@ namespace StudentManagement.Api.Endpoints.Student
             _studentService = studentService;
         }
 
-        public override async Task HandleAsync(CreateStudentDto req, CancellationToken ct)
+        public override void Configure()
         {
-            var response = await _studentService.CreateStudentAsync(req);
-            await SendAsync(response, cancellation: ct);
+            Verbs(Http.POST);
+            Routes("/students");
+            AllowAnonymous();
+        }
+
+        public override async Task HandleAsync(CreateStudentRequest req, CancellationToken ct)
+        {
+            var response = await _studentService.CreateStudentAsync(req.Dto);
+            await SendAsync(response);
         }
     }
 }

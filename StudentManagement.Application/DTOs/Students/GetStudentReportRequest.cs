@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace StudentManagement.Application.DTOs.Students
 {
-    public class UpdateStudentRequest
+    public class GetStudentReportRequest
     {
-        public Guid Id { get; set; }
-        public UpdateStudentDto Dto { get; set; }
+        public int StudentId { get; set; }
     }
+
 }
